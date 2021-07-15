@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/lightGrey"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="75dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:elevation="8dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/imageViewPager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="7.5dp"
+                    android:layout_weight="1">
+
+                </androidx.viewpager.widget.ViewPager>
+
+                <TextView
+                    android:id="@+id/package_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white"
+                android:layout_height="100dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/room_layout"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:tint="@color/greenBlueCrayola"
+                    android:src="@drawable/ic_baseline_bedroom_parent_24"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/room_amount_package"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/guest_layout"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_baseline_person_24"
+                        app:tint="@color/greenBlueCrayola"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/guest_amount_package"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/size_layout"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_baseline_border_all_24"
+                        app:tint="@color/greenBlueCrayola" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/apartment_size_package"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:elevation="8dp"
+                android:padding="15dp"
+                android:orientation="vertical"
+                android:layout_height="80dp">
+
+                <TextView
+                    android:id="@+id/package_description"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layoutDirection="ltr"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="22sp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/price_package"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/oceanGreen"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white"
+                android:elevation="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkInTv"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:text="תאריך כניסה: "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkOutTv"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:text="תאריך יציאה: "/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_no_radius"
+            android:text="הוספה לעגלה"
+            android:textSize="18sp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

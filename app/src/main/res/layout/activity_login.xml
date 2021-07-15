@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layoutDirection="rtl"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/mailEtLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:hint="דואר אלקטרוני"
+            android:inputType="textEmailAddress"
+            android:paddingRight="5dp" />
+
+
+        <EditText
+            android:id="@+id/rePasswordEtLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/edit_text_background"
+            android:gravity="right|center"
+            android:hint="סיסמה"
+            android:inputType="textPassword"
+            android:paddingRight="5dp"
+            android:textDirection="rtl" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="שכחתי סיסמה"
+                android:layout_marginLeft="150dp"
+                android:id="@+id/forgotPassowrd"
+                android:textColor="@color/greenBlueCrayola" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="אין לי משמתמש"
+                android:id="@+id/noUserTv"
+                android:textColor="@color/greenBlueCrayola"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_button_blue_green_crayola"
+            android:text="התחברות"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>

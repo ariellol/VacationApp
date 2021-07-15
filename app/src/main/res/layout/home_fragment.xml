@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/lightGrey"
+    android:layoutDirection="rtl">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:id="@+id/filterCardView"
+        android:layout_height="180dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingVertical="7.5dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="300dp"
+            app:backgroundTint="@null"
+            android:id="@+id/open_date_picker_button"
+            android:background="@drawable/stroke_button"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="300dp"
+            app:backgroundTint="@null"
+            android:id="@+id/open_room_guest_picker"
+            android:background="@drawable/stroke_button"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/oceanGreen"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="חיפוש"
+            android:id="@+id/filterSearchButton"
+            android:background="@color/oceanGreen"/>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/packagesListView"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:layout_below="@id/filterCardView"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

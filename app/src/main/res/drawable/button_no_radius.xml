@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:shape="rectangle"
+    app:tint="@color/starCommandBlue">
+    <solid android:color="@color/starCommandBlue" />
+    <size
+        android:width="350dp"
+        android:height="60dp" />
+</shape>

@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">VacationApp</string>
+    <string name="personal_area">אזור אישי</string>
+    <string name="about_us">עלינו</string>
+    <string name="home">דף הבית</string>
+    <string name="cart">עגלה</string>
+    <string name="log_out">התנתקות</string>
+    <string name="shared_preferences_name">userInfo</string>
+    <string name="first_name">firstName</string>
+    <string name="last_name">lastName</string>
+    <string name="phone_number">phoneNumber</string>
+    <string name="mail">mail</string>
+    <string name="isManager">isManager</string>
+
+    <string name="material_calendar_sunday">א</string>
+    <string name="material_calendar_monday">ב</string>
+    <string name="material_calendar_tuesday">ג</string>
+    <string name="material_calendar_wednesday">ד</string>
+    <string name="material_calendar_thursday">ה</string>
+    <string name="material_calendar_friday">ו</string>
+    <string name="material_calendar_saturday">ש</string>
+
+    <array name="material_calendar_months_array">
+        <item>ינואר</item>
+        <item>פברואר</item>
+        <item>מרץ</item>
+        <item>אפריל</item>
+        <item>מאי</item>
+        <item>יוני</item>
+        <item>יולי</item>
+        <item>אוגוסט</item>
+        <item>ספטמבר</item>
+        <item>אוקטובר</item>
+        <item>נובמבר</item>
+        <item>דצמבר</item>
+    </array>
+    <string-array name="order_spinner">
+        <item>כתובת מייל</item>
+        <item>שם</item>
+        <item>הרשאה</item>
+    </string-array>
+
+    <string-array name="filter_spinner">
+
+    </string-array>
+
+
+</resources>

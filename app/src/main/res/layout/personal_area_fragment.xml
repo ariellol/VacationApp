@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/personl_info_card"
+            android:layout_width="350dp"
+            android:layout_height="265dp"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:elevation="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="פרטים אישיים"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="שם פרטי" />
+
+                <EditText
+                    android:id="@+id/edit_firstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7.5dp"
+                    android:background="@drawable/edit_text_background" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="שם משפחה" />
+
+                <EditText
+                    android:id="@+id/edit_lastName"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="7.5dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="טלפון" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:id="@+id/edit_phone"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/email_card"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/personl_info_card"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="30dp"
+            android:elevation="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="כתובת הדואר האלקטרוני"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="330dp"
+                    android:textSize="16sp"
+                    android:layout_height="50dp"
+                    android:id="@+id/edit_mail"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:id="@+id/updateMailTv"
+                    android:text="עדכנו את הדואר האלקטרוני שלכם"
+                    android:textColor="@color/starCommandBlue"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/updateCardInfoCard"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/email_card"
+            android:layout_centerHorizontal="true"
+            android:elevation="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="פרטי כרטיס אשראי"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="הוסיפו עכשיו את כרטיס האשראי להקלה בתהליך ההזמנה" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="7.5dp"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="הוסיפו כרטיס אשראי חדש"
+                    android:textStyle="bold"
+                    android:textColor="@color/greenBlueCrayola"/>
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/updateCardInfoCard"
+            android:text="שינוי סיסמה"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/changePasswordButton"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/greenBlueCrayola" />
+
+        <TextView
+            android:id="@+id/logOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@id/changePasswordButton"
+            android:text="@string/log_out"
+            android:textColor="@color/red"
+            android:textSize="20sp" />
+    </RelativeLayout>
+</ScrollView>

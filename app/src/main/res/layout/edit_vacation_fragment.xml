@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl">
+
+        <TextView
+            android:id="@+id/title_add_package_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="עריכה של חבילת נופש"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/title_edit_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_add_package_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:hint="כותרת"
+            android:maxLines="1"
+            android:paddingRight="5dp" />
+
+        <EditText
+            android:id="@+id/description_edit_et"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_below="@id/title_edit_et"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="right"
+            android:hint="תיאור"
+            android:padding="5dp" />
+
+        <LinearLayout
+            android:id="@+id/smallEtLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description_edit_et"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/room_amount_et"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:hint="מספר חדרים"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/apartment_size_et"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:gravity="center"
+                android:hint="גודל דירת הנופש"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/smallEtLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/smallEtLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/price_for_night_et"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:hint="מחיר לסופש"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/max_guests_et"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:gravity="center"
+                android:hint="מקסימום אורחים"
+                android:inputType="number" />
+        </LinearLayout>
+
+
+        <HorizontalScrollView
+            android:id="@+id/imagesScrollView"
+            android:layout_width="match_parent"
+            android:layoutDirection="ltr"
+            android:layout_marginVertical="30dp"
+            android:layout_height="wrap_content"
+            android:background="@color/lightGrey"
+            android:layout_below="@id/smallEtLayout2">
+
+            <LinearLayout
+                android:id="@+id/imagesLayout"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGrey"
+                android:layoutDirection="ltr"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/editVacationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imagesScrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_star_command"
+            android:text="ביצוע שינויים"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:background="@drawable/button_star_command"
+            app:backgroundTint="@color/red"
+            android:layout_centerHorizontal="true"
+            android:text="מחיקת חבילת נופש"
+            android:textColor="@color/white"
+            android:layout_marginBottom="15dp"
+            android:textSize="16sp"
+            android:id="@+id/open_delete_vacation_dialog"
+            android:layout_below="@id/editVacationButton"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</ScrollView>

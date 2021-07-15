@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="350dp">
+
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="אימייל כרגע"
+        android:inputType="textEmailAddress"
+        android:paddingRight="5dp"
+        android:id="@+id/previousMailEt"
+        android:background="@drawable/edit_text_background"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="סיסמה"
+        android:inputType="textPassword"
+        android:gravity="right|center"
+        android:textDirection="rtl"
+        android:paddingRight="5dp"
+        android:layout_marginVertical="15dp"
+        android:id="@+id/changeMailPasswordEt"
+        android:background="@drawable/edit_text_background"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:hint="אימייל חדש להחלפה"
+        android:inputType="textEmailAddress"
+        android:paddingRight="5dp"
+        android:id="@+id/newMailEt"
+        android:background="@drawable/edit_text_background"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/starCommandBlue"
+        android:textColor="@color/white"
+        android:id="@+id/updateMailButton"
+        android:text="שנה אימייל"
+        android:background="@drawable/button_star_command"/>
+
+
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/lightGrey"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/darker_gray"
+        android:layout_height="3dp"/>
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:datePickerMode="calendar"
+        android:calendarViewShown="true"
+        android:id="@+id/datePicker"
+        android:layout_height="wrap_content"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="10dp"
+        android:background="@color/white"
+        android:elevation="3dp"
+        android:layout_height="110dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:id="@+id/date_picked_tv"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:textColor="@color/white"
+        android:text="בחרו תאריכים"
+        android:layout_marginTop="40dp"
+        android:id="@+id/date_picked_button"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:backgroundTint="@color/starCommandBlue"
+        android:background="@color/starCommandBlue"/>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

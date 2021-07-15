@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "846810573759",
+    "firebase_url": "https://vacationapp-381c4-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "vacationapp-381c4",
+    "storage_bucket": "vacationapp-381c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846810573759:android:9b0ef842743a3a0356cf0a",
+        "android_client_info": {
+          "package_name": "com.ariellip.vacationApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846810573759-fuvcqlh7ig81bomam6l1262go7q7fbh8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH4JyOCV_ygZh7qJfvwvbIcQ-WYuTV8Xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846810573759-fuvcqlh7ig81bomam6l1262go7q7fbh8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

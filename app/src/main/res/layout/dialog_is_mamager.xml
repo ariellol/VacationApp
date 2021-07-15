@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/are_you_sure_manager"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="120dp"
+            android:id="@+id/change_manager_state"
+            android:textColor="@color/white"
+            android:text="שינוי מצב גישה"
+            android:background="@drawable/button_star_command"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_width="120dp"
+            android:text="ביטול"
+            android:textColor="@color/white"
+            android:layout_marginRight="15dp"
+            android:id="@+id/cancel_manager_state"
+            app:backgroundTint="@color/red"
+            android:background="@drawable/button_star_command"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
