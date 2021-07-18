@@ -23,6 +23,14 @@ public class User implements Serializable{
         this.uid = uid;
     }
 
+    public User(String firstName, String lastName, String email, String phoneNumber,boolean isManager) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.isManager = isManager;
+    }
+
 
     public User(){}
 

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -34,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     FirebaseAuth newUserAuth;
     DatabaseReference databaseRef;
     SharedPreferences userInfo;
-
+    boolean userExists = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,30 +71,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String email = emailEt.getText().toString().trim();
                 String phoneNumber = phoneNumberEt.getText().toString().trim();
                 String password = passwordEt.getText().toString();
-
-                User newUser = new User(firstName, lastName, email, phoneNumber, false,newUserAuth.getUid());
-
-                databaseRef.child("Users").child("email")
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    emailEt.setFocusable(true);
-                                    emailEt.setError("מייל זה קיים במערכת");
-                                    return;
-                                } else {
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
+                User newUser = new User(firstName, lastName, email, phoneNumber, false);
 
                 ProgressDialog progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("מתחבר...");
                 progressDialog.show();
+
+
+                if (userExists == true){
+                    Toast.makeText(this, "מייל זה קיים במערכת", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    return;
+                }
 
                 newUserAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -101,12 +90,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         if (task.isSuccessful()) {
 
                             progressDialog.dismiss();
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(newUser)
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                            String uid = reference.getKey();
+
+                           reference.setValue(newUser)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+                                                reference.child("uid").setValue(uid);
                                                 userInfo = getSharedPreferences(
                                                         getResources().getString(R.string.shared_preferences_name),MODE_PRIVATE);
                                                 SharedPreferences.Editor editor = userInfo.edit();
@@ -124,13 +118,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                 startActivity(homeIntent);
                                                 finish();
                                             }
-                                            else
+                                            else {
                                                 Toast.makeText(RegisterActivity.this, "משהו השתבש..", Toast.LENGTH_SHORT).show();
-
+                                                progressDialog.dismiss();
+                                            }
                                         }
                                     });
                         }
                         else{
+                            progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "משהו השתבש..", Toast.LENGTH_SHORT).show();
 
                         }
@@ -138,7 +134,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 });
 
             }
-            else { }
         }
     }
 
@@ -203,5 +198,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         }
         return super.dispatchTouchEvent(event);
+    }
+
+    private void isUserExists(String email){
+        databaseRef.child("Users")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot ds : snapshot.getChildren()){
+                            if (ds.child("email").getValue().toString().equals(email)){
+                                userExists = true;
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
     }
 }

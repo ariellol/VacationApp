@@ -9,7 +9,6 @@ public class Vacation implements Serializable {
 
     private String title;
     private String description;
-    private ArrayList<String> availableDates;
     private ArrayList<String> takenDates;
     private String adress;
     private boolean available;
@@ -49,12 +48,11 @@ public class Vacation implements Serializable {
         this.firstImage = images.get(0);
     }
 
-    public Vacation(String title, String description, ArrayList<String> availableDates, ArrayList<String> takenDates,
+    public Vacation(String title, String description, ArrayList<String> takenDates,
                     String adress, boolean available, int amountOfRooms, int amountOfGuests, ArrayList<String> images,
                     int apartmentSize, int priceForNight,String uid) {
         this.title = title;
         this.description = description;
-        this.availableDates = availableDates;
         this.takenDates = takenDates;
         this.adress = adress;
         this.available = available;
@@ -117,14 +115,6 @@ public class Vacation implements Serializable {
         this.description = description;
     }
 
-    public ArrayList<String> getAvailableDates() {
-        return availableDates;
-    }
-
-    public void setAvailableDates(ArrayList<String> availableDates) {
-        this.availableDates = availableDates;
-    }
-
     public ArrayList<String> getTakenDates() {
         return takenDates;
     }
@@ -178,7 +168,6 @@ public class Vacation implements Serializable {
         return "Vacation{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", availableDates=" + availableDates +
                 ", takenDates=" + takenDates +
                 ", adress='" + adress + '\'' +
                 ", available=" + available +
