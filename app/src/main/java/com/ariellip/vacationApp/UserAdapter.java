@@ -42,11 +42,10 @@ public class UserAdapter extends ArrayAdapter<User> implements View.OnClickListe
 
         changeManagerStateDialog = new Dialog(context);
         changeManagerStateDialog.setContentView(R.layout.dialog_is_mamager);
+        changeManagerStateDialog.setCancelable(false);
         isManagerMessageDialog = changeManagerStateDialog.findViewById(R.id.are_you_sure_manager);
         cancel = changeManagerStateDialog.findViewById(R.id.cancel_manager_state);
         changeState = changeManagerStateDialog.findViewById(R.id.change_manager_state);
-
-
     }
 
 
@@ -85,11 +84,13 @@ public class UserAdapter extends ArrayAdapter<User> implements View.OnClickListe
                 currentCheckbox = buttonView;
                 currentUser = users.get(position);
                 if (isChecked) {
-                    isManagerMessageDialog.setText("האם אתה בטוח שאתה רוצה שמשתמש זה יהיה מנהל?");
+                    isManagerMessageDialog.setText("האם אתה בטוח שאתה רוצה ש" +
+                            user.getFirstName() + " " + user.getLastName() + " יהיה מנהל");
 
                 }
                 else {
-                    isManagerMessageDialog.setText("האם אתה בטוח שאתה רוצה להסיר את הרשאת המנהל ממשתמש זה?");
+                    isManagerMessageDialog.setText("האם אתה בטוח שאתה רוצה להסיר את הרשאת המנהל מ"
+                            + user.getFirstName() + " " + user.getLastName());
                 }
 
                 changeManagerStateDialog.show();

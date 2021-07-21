@@ -96,6 +96,7 @@ public class UserListWatchFragment extends Fragment implements View.OnClickListe
         orderUsersButton = filterDialog.findViewById(R.id.filterButton);
         orderUsersButton.setOnClickListener(this);
 
+        setHasOptionsMenu(true);
         return parent;
     }
 

@@ -36,28 +36,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
     BottomNavigationView navigationView;
     Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+        toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+        if (savedInstanceState==null) {
+            if (BuildConfig.DEBUG) {
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
+                toolbar.setTitle(getResources().getString(R.string.home));
+            }
+        }
+
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
 
         navigationView = findViewById(R.id.bottom_nav);
         navigationView.setOnItemSelectedListener(this);
 
-        toolbar = findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
-
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new HomeFragment()).addToBackStack(null).commit();
-        toolbar.setTitle(getResources().getString(R.string.home));
-
 
 
     }
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -83,6 +86,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
                 transaction.addToBackStack(null);
                 transaction.commit();
                 toolbar.setTitle(getResources().getString(R.string.home));
+                break;
+            case R.id.cart:
+                if (currentFragment instanceof CartFragment){
+                    break;
+                }
+                popPreviousFragments();
+                transaction.add(R.id.fragment_container,new CartFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                toolbar.setTitle(getResources().getString(R.string.cart));
                 break;
         }
         return true;

@@ -14,12 +14,21 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class FilterPackagesBottomSheet extends BottomSheetDialogFragment implements View.OnClickListener {
 
-    Button addRoom,removeRoom,addAdult,removeAdult;
+    Button addRoom,removeRoom,addAdult,removeAdult, applyButton;
 
     TextView adultsNumberTv, roomsNumberTv;
-    int roomsNum = 1,totalGuests = 1;
+    int roomsNum,totalGuests;
+    FilterPick filterPick;
 
-    public FilterPackagesBottomSheet(){ }
+    public FilterPackagesBottomSheet(FilterPick filterPick, int roomsNum, int guests){
+        this.filterPick = filterPick;
+        this.roomsNum = roomsNum;
+        this.totalGuests = guests;
+    }
+
+    public FilterPackagesBottomSheet(){
+        this.dismiss();
+    }
 
     @Nullable
     @Override
@@ -30,6 +39,8 @@ public class FilterPackagesBottomSheet extends BottomSheetDialogFragment impleme
         removeRoom = parent.findViewById(R.id.room_minus);
         addAdult = parent.findViewById(R.id.adults_plus);
         removeAdult = parent.findViewById(R.id.adults_minus);
+        applyButton = parent.findViewById(R.id.filterPackagesButton);
+        applyButton.setOnClickListener(this);
         addRoom.setOnClickListener(this);
         removeRoom.setOnClickListener(this);
         addAdult.setOnClickListener(this);
@@ -81,6 +92,10 @@ public class FilterPackagesBottomSheet extends BottomSheetDialogFragment impleme
                     removeAdult.setBackground(getResources().getDrawable(R.drawable.remove_stroke_button_disabled));
                 else
                     removeAdult.setBackground(getResources().getDrawable(R.drawable.remove_stroke_button));
+                break;
+            case R.id.filterPackagesButton:
+                filterPick.onRoomsAndGuestsPicked(roomsNum,totalGuests);
+                this.dismiss();
                 break;
 
         }

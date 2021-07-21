@@ -24,17 +24,26 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class pickDatesBottomSheet extends BottomSheetDialogFragment {
+public class pickDatesBottomSheet extends BottomSheetDialogFragment implements View.OnClickListener {
 
     DatePicker datePicker;
     Button datePickedButton;
     TextView datePickedTv;
     SimpleDateFormat dateFormat;
-    String dateStr;
-    Calendar weekStart;
+    datePicked datePicked;
+    String startDate;
+    String endDate;
 
-    public pickDatesBottomSheet() {
+    public pickDatesBottomSheet(datePicked datePicked,String startDate, String endDate) {
+        this.datePicked = datePicked;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
+
+    public pickDatesBottomSheet(){
+        this.dismiss();
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
@@ -48,45 +57,64 @@ public class pickDatesBottomSheet extends BottomSheetDialogFragment {
         datePickedButton = parent.findViewById(R.id.date_picked_button);
         datePickedTv = parent.findViewById(R.id.date_picked_tv);
 
-
-        String startWeekend = dateFormat.format(getNearestWeekStart().getTime());
-        String endWeekend = dateFormat.format(getNearestWeekEnd().getTime());
-        String weekend = startWeekend + " - " + endWeekend;
+        startDate = dateFormat.format(getNearestWeekStart().getTime());
+        endDate = dateFormat.format(getNearestWeekEnd().getTime());
+        String weekend = endDate + " - " + startDate;
         datePickedTv.setText(weekend);
+        datePicker.setMinDate(getNearestWeekStart().getTimeInMillis());
         datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 try {
-
-                    Date date = dateFormat.parse(dayOfMonth + "/" + monthOfYear + "/" + year);
-                    date = getWeekStartInMonth(date).getTime();
-                    String pickedDate = date.toString();
+                    String fixedDate = String.format("%02d",dayOfMonth) + "/" + String.format("%02d",(monthOfYear + 1)) + "/" + year;
+                    Date startDate = dateFormat.parse(fixedDate);
+                    startDate = getWeekendStartInWeek(startDate).getTime();
+                    Date endDate = dateFormat.parse(fixedDate);
+                    endDate = getWeekendEndInWeek(endDate).getTime();
+                    datePicked.onDatePicked(dateFormat.format(startDate),dateFormat.format(endDate));
+                    String pickedDate = (dateFormat.format(endDate) + " - " + dateFormat.format(startDate));
                     datePickedTv.setText(pickedDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         });
+
+        datePickedButton.setOnClickListener(this);
+
         return parent;
     }
 
-    private Calendar getNearestWeekStart() {
+    public static Calendar getNearestWeekStart() {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
         return c;
     }
 
-    private Calendar getNearestWeekEnd() {
+    public static Calendar getNearestWeekEnd() {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
         return c;
     }
 
-    private Calendar getWeekStartInMonth(Date date) {
+    private Calendar getWeekendStartInWeek(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
         return c;
     }
 
+    private Calendar getWeekendEndInWeek(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+        return c;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == datePickedButton.getId()){
+            this.dismiss();
+        }
+    }
 }

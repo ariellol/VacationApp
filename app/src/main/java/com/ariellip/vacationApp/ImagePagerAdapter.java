@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class ImagePagerAdapter extends PagerAdapter{
 
-    private Context context;
+    private final Context context;
     private ArrayList<String> imagesUrls;
     private LayoutInflater inflater;
     StorageReference reference;
@@ -50,7 +50,6 @@ public class ImagePagerAdapter extends PagerAdapter{
         ImageView imageView = itemView.findViewById(R.id.image_to_view);
         reference = reference.child(imagesUrls.get(position));
         GlideApp.with(context).load(reference).into(imageView);
-        container.addView(itemView);
         this.notifyDataSetChanged();
         return itemView;
     }

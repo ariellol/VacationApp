@@ -10,7 +10,6 @@ public class Vacation implements Serializable {
     private String title;
     private String description;
     private ArrayList<String> takenDates;
-    private String adress;
     private boolean available;
     private int amountOfRooms;
     private int amountOfGuests;
@@ -19,9 +18,10 @@ public class Vacation implements Serializable {
     private int priceForWeekend;
     private String firstImage;
     private String uid;
+    private String cartTime;
 
     public Vacation(String title, String description, boolean available,
-                    int amountOfRooms, int amountOfGuests,int apartmentSize, int priceForNight, String adress, ArrayList<String> images, String uid) {
+                    int amountOfRooms, int amountOfGuests,int apartmentSize, int priceForNight, ArrayList<String> images, String uid) {
         this.title = title;
         this.description = description;
         this.available = available;
@@ -29,7 +29,6 @@ public class Vacation implements Serializable {
         this.amountOfGuests = amountOfGuests;
         this.apartmentSize = apartmentSize;
         this.priceForWeekend = priceForNight;
-        this.adress = adress;
         this.images = images;
         this.firstImage = images.get(0);
         this.uid = uid;
@@ -49,12 +48,11 @@ public class Vacation implements Serializable {
     }
 
     public Vacation(String title, String description, ArrayList<String> takenDates,
-                    String adress, boolean available, int amountOfRooms, int amountOfGuests, ArrayList<String> images,
+                    boolean available, int amountOfRooms, int amountOfGuests, ArrayList<String> images,
                     int apartmentSize, int priceForNight,String uid) {
         this.title = title;
         this.description = description;
         this.takenDates = takenDates;
-        this.adress = adress;
         this.available = available;
         this.amountOfRooms = amountOfRooms;
         this.amountOfGuests = amountOfGuests;
@@ -147,13 +145,6 @@ public class Vacation implements Serializable {
         this.amountOfGuests = amountOfGuests;
     }
 
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
 
     public ArrayList<String> getImages() {
         return images;
@@ -163,13 +154,20 @@ public class Vacation implements Serializable {
         this.images = images;
     }
 
+    public String getCartTime() {
+        return cartTime;
+    }
+
+    public void setCartTime(String cartTime) {
+        this.cartTime = cartTime;
+    }
+
     @Override
     public String toString() {
         return "Vacation{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", takenDates=" + takenDates +
-                ", adress='" + adress + '\'' +
                 ", available=" + available +
                 ", amountOfRooms=" + amountOfRooms +
                 ", amountOfGuests=" + amountOfGuests +

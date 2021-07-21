@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layoutDirection="ltr"
+    android:layout_height="300dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="האם ברצונך לראות את התוספות והאטרקציות \n שתוכל להוסיף לחבילה שלך?"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginRight="7.5dp"
+        android:id="@+id/move_to_attraction"
+        android:background="@drawable/rounded_button_blue_green_crayola"
+        app:backgroundTint="@color/oceanGreen"
+        android:text="מעבר לתוספות ואטרקציות"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:id="@+id/move_to_cart"
+            android:background="@drawable/rounded_button_blue_green_crayola"
+            android:text="מעבר לעגלת הקניות"/>
+    </LinearLayout>
+</LinearLayout>

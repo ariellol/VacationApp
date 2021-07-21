@@ -2,10 +2,12 @@ package com.ariellip.vacationApp;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,10 +30,12 @@ public class VacationAdapter extends ArrayAdapter<Vacation> {
     ArrayList<Vacation> vacations;
     StorageReference reference;
 
+
     public VacationAdapter(@NonNull Context context, ArrayList<Vacation> vacations) {
-        super(context, 0,vacations);
+        super(context, 0,new ArrayList<Vacation>());
         this.context = context;
         this.vacations = vacations;
+        updateVacations(vacations);
     }
 
     @NonNull
@@ -66,5 +70,12 @@ public class VacationAdapter extends ArrayAdapter<Vacation> {
         priceForWeekend.setText(String.valueOf(vacation.getPriceForWeekend()) + " שקלים");
 
         return convertView;
+    }
+
+    public void updateVacations(ArrayList<Vacation> vacations){
+        Log.d("availableVacationsAdapter",vacations.toString());
+        this.clear();
+        this.addAll(vacations);
+
     }
 }

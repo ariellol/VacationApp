@@ -20,6 +20,8 @@
     <string name="material_calendar_friday">ו</string>
     <string name="material_calendar_saturday">ש</string>
 
+    <string name="break_line">\n</string>
+
     <array name="material_calendar_months_array">
         <item>ינואר</item>
         <item>פברואר</item>
