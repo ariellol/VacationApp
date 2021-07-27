@@ -4,73 +4,39 @@ import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class Vacation implements Serializable {
+public class Vacation extends Item implements Serializable {
 
-    private String title;
-    private String description;
     private ArrayList<String> takenDates;
     private boolean available;
     private int amountOfRooms;
     private int amountOfGuests;
-    private ArrayList<String> images;
     private int apartmentSize;
     private int priceForWeekend;
-    private String firstImage;
-    private String uid;
     private String cartTime;
 
-    public Vacation(String title, String description, boolean available,
-                    int amountOfRooms, int amountOfGuests,int apartmentSize, int priceForNight, ArrayList<String> images, String uid) {
-        this.title = title;
-        this.description = description;
-        this.available = available;
-        this.amountOfRooms = amountOfRooms;
-        this.amountOfGuests = amountOfGuests;
-        this.apartmentSize = apartmentSize;
-        this.priceForWeekend = priceForNight;
-        this.images = images;
-        this.firstImage = images.get(0);
-        this.uid = uid;
-    }
+
 
     public Vacation(String title, String description, boolean available,
-                    int amountOfRooms, int amountOfGuests,int apartmentSize, int priceForNight, ArrayList<String> images) {
-        this.title = title;
-        this.description = description;
-        this.available = available;
+                    int amountOfRooms, int amountOfGuests,int apartmentSize, int priceForWeekend, ArrayList<String> images) {
+        super(images.get(0),title,description,priceForWeekend,images);
         this.amountOfRooms = amountOfRooms;
         this.amountOfGuests = amountOfGuests;
         this.apartmentSize = apartmentSize;
-        this.priceForWeekend = priceForNight;
-        this.images = images;
-        this.firstImage = images.get(0);
+        this.available = available;
     }
 
-    public Vacation(String title, String description, ArrayList<String> takenDates,
-                    boolean available, int amountOfRooms, int amountOfGuests, ArrayList<String> images,
-                    int apartmentSize, int priceForNight,String uid) {
-        this.title = title;
-        this.description = description;
-        this.takenDates = takenDates;
-        this.available = available;
-        this.amountOfRooms = amountOfRooms;
-        this.amountOfGuests = amountOfGuests;
-        this.images = images;
-        this.apartmentSize = apartmentSize;
-        this.priceForWeekend = priceForNight;
-        this.firstImage = images.get(0);
-        this.uid = uid;
-    }
+
 
     public Vacation(){}
 
     public String getUid() {
-        return uid;
+        return super.getUid();
     }
 
     public void setUid(String uid) {
-        this.uid = uid;
+        super.setUid(uid);
     }
 
     public int getApartmentSize() {
@@ -90,27 +56,27 @@ public class Vacation implements Serializable {
     }
 
     public String getFirstImage() {
-        return firstImage;
+        return super.getFirstImage();
     }
 
     public void setFirstImage(String firstImage) {
-        this.firstImage = firstImage;
+        super.setFirstImage(firstImage);
     }
 
     public String getTitle() {
-        return title;
+        return super.getTitle();
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        super.setTitle(title);
     }
 
     public String getDescription() {
-        return description;
+        return super.getDescription();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        super.setDescription(description);
     }
 
     public ArrayList<String> getTakenDates() {
@@ -147,11 +113,11 @@ public class Vacation implements Serializable {
 
 
     public ArrayList<String> getImages() {
-        return images;
+        return super.getImages();
     }
 
     public void setImages(ArrayList<String> images) {
-        this.images = images;
+        super.setImages(images);
     }
 
     public String getCartTime() {
@@ -164,16 +130,28 @@ public class Vacation implements Serializable {
 
     @Override
     public String toString() {
-        return "Vacation{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", takenDates=" + takenDates +
+        return super.toString() + " Vacation{" +
+                "takenDates=" + takenDates +
                 ", available=" + available +
                 ", amountOfRooms=" + amountOfRooms +
                 ", amountOfGuests=" + amountOfGuests +
-                ", images=" + images +
                 ", apartmentSize=" + apartmentSize +
-                ", priceForNight=" + priceForWeekend +
+                ", priceForWeekend=" + priceForWeekend +
+                ", cartTime='" + cartTime + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item vacation = (Vacation) o;
+
+        return super.getUid().equals(vacation.getUid());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getUid());
     }
 }

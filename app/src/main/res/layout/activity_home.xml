@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="unlabeled"
+        android:soundEffectsEnabled="true"
         app:itemIconTint="@color/white"
         app:itemBackground="@color/greenBlueCrayola"
         app:itemRippleColor="@color/greenBlueCrayola"

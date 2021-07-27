@@ -6,6 +6,8 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,18 +26,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     BottomNavigationView navigationView;
     Toolbar toolbar;
-
+    Menu mainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
 
         if (savedInstanceState==null) {
             if (BuildConfig.DEBUG) {
+
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
                 toolbar.setTitle(getResources().getString(R.string.home));
             }
@@ -57,10 +56,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
 
         navigationView = findViewById(R.id.bottom_nav);
         navigationView.setOnItemSelectedListener(this);
-
-
-
     }
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -75,6 +73,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
                 transaction.add(R.id.fragment_container, new personalAreaFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
+                removeItemsUnderline(navigationView);
+                underlineMenuItem(item);
                 toolbar.setTitle(getResources().getString(R.string.personal_area));
                 break;
             case R.id.home:
@@ -85,6 +85,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
                 transaction.add(R.id.fragment_container, new HomeFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
+                removeItemsUnderline(navigationView);
+                underlineMenuItem(item);
                 toolbar.setTitle(getResources().getString(R.string.home));
                 break;
             case R.id.cart:
@@ -95,6 +97,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
                 transaction.add(R.id.fragment_container,new CartFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
+                removeItemsUnderline(navigationView);
+                underlineMenuItem(item);
                 toolbar.setTitle(getResources().getString(R.string.cart));
                 break;
         }
@@ -142,7 +146,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
             }
         }
         else
-            if (currentFragment instanceof ManagerFragment){
+            if (currentFragment instanceof ManagerFragment || currentFragment instanceof VacationPackageFragment){
                 popPreviousFragments();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, new HomeFragment());
@@ -151,7 +155,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
                 toolbar.setTitle(getResources().getString(R.string.home));
 
             }
-            else if(currentFragment instanceof UserListWatchFragment || currentFragment instanceof VacationListManager){
+            else if(currentFragment instanceof UserListWatchFragment || currentFragment instanceof VacationListManager ||
+                    currentFragment instanceof ExtrasListManager){
                 popPreviousFragments();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, new ManagerFragment());
@@ -167,6 +172,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
                 transaction.commit();
                 toolbar.setTitle("צפייה ועריכת חבילות");
             }
+            else if(currentFragment instanceof ExtrasFragment){
+                popPreviousFragments();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new CartFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                toolbar.setTitle("עגלה");
+            }
+
+    }
+
+    private void removeItemsUnderline(BottomNavigationView bottomNavigationView) {
+        for (int i = 0; i <  bottomNavigationView.getMenu().size(); i++) {
+            MenuItem item = bottomNavigationView.getMenu().getItem(i);
+            item.setTitle(item.getTitle().toString());
+        }
+    }
+
+    private void underlineMenuItem(MenuItem item) {
+        SpannableString content = new SpannableString(item.getTitle());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        item.setTitle(content);
 
     }
 }

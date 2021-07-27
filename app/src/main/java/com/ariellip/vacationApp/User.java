@@ -13,6 +13,7 @@ public class User implements Serializable{
     private String phoneNumber;
     private boolean isManager;
     private String uid;
+    private Cart cart;
 
     public User(String firstName, String lastName, String email, String phoneNumber,boolean isManager,String uid) {
         this.firstName = firstName;
@@ -33,6 +34,7 @@ public class User implements Serializable{
 
 
     public User(){}
+
 
     public boolean getIsManager() {
         return isManager;
@@ -66,6 +68,13 @@ public class User implements Serializable{
         this.email = email;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

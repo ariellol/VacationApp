@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -117,20 +118,27 @@ public class VacationPackageFragment extends Fragment implements View.OnClickLis
             newVacation.add(currentVacation.getUid());
             Cart cart = new Cart(newVacation,startDate);
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
             DatabaseReference userCartRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-            userCartRef.child("cart").child(currentVacation.getUid()).setValue(cart);
+            userCartRef = userCartRef.child("cart");
+            String cartUid = userCartRef.push().getKey();
+            cart.setCartUid(cartUid);
+            userCartRef.child(cartUid).child(currentVacation.getUid()).setValue(cart);
+
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                    .child("takenDates").child(currentVacation.getUid());
-            reference.setValue(startDate);
+                    .child("takenDates").child(currentVacation.getUid()).child(cartUid);
+            reference.setValue(cart);
         }
         else if(v.getId() == moveToAttractions.getId()){
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ExtrasFragment())
+                    .addToBackStack(null).commit();
+            ((Toolbar)getActivity().findViewById(R.id.app_bar)).setTitle("תוספות ואטרקציות");
             attracationDialog.dismiss();
         }
         else if(v.getId() == moveToCart.getId()){
 
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CartFragment())
                     .addToBackStack(null).commit();
+            ((Toolbar)getActivity().findViewById(R.id.app_bar)).setTitle("עגלה");
             attracationDialog.dismiss();
         }
     }

@@ -22,6 +22,8 @@
 
     <string name="break_line">\n</string>
 
+    <string name="text_spaces">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+
     <array name="material_calendar_months_array">
         <item>ינואר</item>
         <item>פברואר</item>

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     android:layoutDirection="rtl"
     tools:context=".LoginActivity">
 
@@ -67,4 +68,49 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
     </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="320dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="30dp"
+        android:clickable="true"
+        android:id="@+id/google_sign_in_button"
+        android:background="@color/lightGrey"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="התחברו עם חשבון גוגל"
+            android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/googleg_standard_color_18"
+        android:layout_height="35dp"/>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="320dp"
+        android:clickable="true"
+        android:background="@color/lightGrey"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="30dp"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="התחברו עם חשבון פייסבוק"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/facebook_icon"
+            android:layout_height="40dp"/>
+
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

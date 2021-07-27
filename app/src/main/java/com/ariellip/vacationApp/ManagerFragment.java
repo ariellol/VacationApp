@@ -39,6 +39,8 @@ public class ManagerFragment extends Fragment implements View.OnClickListener {
 
     Button buttonWatchUserList;
     Button buttonWatchVacationList;
+    Button showExtrasButton;
+    Button editEntryTicket;
 
     @Nullable
     @Override
@@ -58,6 +60,12 @@ public class ManagerFragment extends Fragment implements View.OnClickListener {
         buttonWatchVacationList = parent.findViewById(R.id.show_all_vacations);
         buttonWatchVacationList.setOnClickListener(this);
 
+        showExtrasButton = parent.findViewById(R.id.show_extras_button);
+        showExtrasButton.setOnClickListener(this);
+
+        editEntryTicket = parent.findViewById(R.id.edit_entry_ticket);
+        editEntryTicket.setOnClickListener(this);
+
         return parent;
     }
 
@@ -73,6 +81,17 @@ public class ManagerFragment extends Fragment implements View.OnClickListener {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VacationListManager())
                     .addToBackStack(null).commit();
             ((Toolbar)getActivity().findViewById(R.id.app_bar)).setTitle("צפייה ועריכת חבילות");
+        }
+
+        else if(v.getId() == R.id.show_extras_button){
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ExtrasListManager())
+                    .addToBackStack(null).commit();
+            ((Toolbar)getActivity().findViewById(R.id.app_bar)).setTitle("צפייה ועריכת אטרקציות");
+        }
+        else if(v.getId() == R.id.edit_entry_ticket){
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new EditTicketFragment())
+                    .addToBackStack(null).commit();
+            ((Toolbar)getActivity().findViewById(R.id.app_bar)).setTitle("עריכת צמיד כניסה למתחם");
         }
     }
 

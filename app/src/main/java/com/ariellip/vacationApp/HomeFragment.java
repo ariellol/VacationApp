@@ -44,6 +44,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.function.LongFunction;
 
@@ -74,13 +75,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener, date
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View parent = inflater.inflate(R.layout.home_fragment, container, false);
+
+
+        vacationListView = parent.findViewById(R.id.packagesListView);
+
+        openDialogPickDateButton = parent.findViewById(R.id.open_date_picker_button);
+        openDialogPickDateButton.setOnClickListener(this);
+        openFilterDialogButton = parent.findViewById(R.id.open_room_guest_picker);
+        openFilterDialogButton.setOnClickListener(this);
+        searchFilteredVacations = parent.findViewById(R.id.filterSearchButton);
+        searchFilteredVacations.setOnClickListener(this);
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("מתחבר...");
+        progressDialog.show();
+
+
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         uid = currentUser.getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
 
 
         vacations = new ArrayList<>();
-        vacationAdapter = new VacationAdapter(getActivity(), vacations);
+
 
         DatabaseReference vacationRef = FirebaseDatabase.getInstance().getReference("Vacations");
         vacationRef.addValueEventListener(new ValueEventListener() {
@@ -90,34 +115,65 @@ public class HomeFragment extends Fragment implements View.OnClickListener, date
                     Vacation vacation = postSnap.getValue(Vacation.class);
                     vacations.add(vacation);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        DatabaseReference takenDatesRef = FirebaseDatabase.getInstance().getReference();
-        takenDatesRef.child("takenDates").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> takenDates = new ArrayList<>();
-                for (int i = 0; i< vacations.size(); i ++){
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (dataSnapshot.getKey().equals(vacations.get(i).getUid())) {
-                            Log.d("vacationUid", vacations.get(i).getUid());
-                            takenDates.add(dataSnapshot.getValue(String.class));
+                DatabaseReference takenDatesRef = FirebaseDatabase.getInstance().getReference();
+                takenDatesRef.child("takenDates").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<String> takenDates = new ArrayList<>();
+                        for (int i = 0; i< vacations.size(); i ++){
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                if (dataSnapshot.getKey().equals(vacations.get(i).getUid())) {
+                                    for (DataSnapshot snap : dataSnapshot.getChildren()){
+                                        takenDates.add(snap.child("takenDate").getValue(String.class));
+                                    }
+                                }
+                            }
+                            vacations.get(i).setTakenDates(takenDates);
+                        }
+                        if (getActivity()!=null) {
+                            vacationAdapter = new VacationAdapter(getActivity(), vacations);
+                            vacationListView.setAdapter(vacationAdapter);
+                            filterAllVacations();
                         }
                     }
-                    vacations.get(i).setTakenDates(takenDates);
-                }
-                vacationAdapter.notifyDataSetChanged();
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+                vacationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (!(vacations.size() <=position)) {
+                            Vacation vacation = vacations.get(position);
+                            Bundle vacationBundle = new Bundle();
+                            vacationBundle.putSerializable("currentVacation", vacation);
+                            vacationBundle.putString("startDate", startDate);
+                            vacationBundle.putString("endDate", endDate);
+                            VacationPackageFragment vacationFragment = new VacationPackageFragment();
+                            vacationFragment.setArguments(vacationBundle);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, vacationFragment)
+                                    .addToBackStack(null).commit();
+                        }
+                    }
+                });
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                startDate = dateFormat.format(pickDatesBottomSheet.getNearestWeekStart().getTime());
+                endDate = dateFormat.format(pickDatesBottomSheet.getNearestWeekEnd().getTime());
+                openDialogPickDateButton.setText(endDate + " - " + startDate);
+                guests = 1;
+                rooms = 1;
+                openFilterDialogButton.setText(rooms + " חדרים " + guests + " אורחים");
+
+                progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference();
 
@@ -135,56 +191,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, date
             }
         });
 
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View parent = inflater.inflate(R.layout.home_fragment, container, false);
-
-
-        vacationListView = parent.findViewById(R.id.packagesListView);
-        vacationListView.setAdapter(vacationAdapter);
-
-        openDialogPickDateButton = parent.findViewById(R.id.open_date_picker_button);
-        openDialogPickDateButton.setOnClickListener(this);
-        openFilterDialogButton = parent.findViewById(R.id.open_room_guest_picker);
-        openFilterDialogButton.setOnClickListener(this);
-        searchFilteredVacations = parent.findViewById(R.id.filterSearchButton);
-        searchFilteredVacations.setOnClickListener(this);
-
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("מתחבר...");
-        progressDialog.show();
-
-
-        vacationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Vacation vacation = vacations.get(position);
-                Bundle vacationBundle = new Bundle();
-                vacationBundle.putSerializable("currentVacation", vacation);
-                vacationBundle.putString("startDate", startDate);
-                vacationBundle.putString("endDate", endDate);
-                VacationPackageFragment vacationFragment = new VacationPackageFragment();
-                vacationFragment.setArguments(vacationBundle);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, vacationFragment)
-                        .addToBackStack(null).commit();
-            }
-        });
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        startDate = dateFormat.format(pickDatesBottomSheet.getNearestWeekStart().getTime());
-        endDate = dateFormat.format(pickDatesBottomSheet.getNearestWeekEnd().getTime());
-        openDialogPickDateButton.setText(endDate + " - " + startDate);
-        guests = 1;
-        rooms = 1;
-        openFilterDialogButton.setText(rooms + " חדרים " + guests + " אורחים");
-
-        filterAllVacations();
-        vacationAdapter.notifyDataSetChanged();
-
-        progressDialog.dismiss();
+        DatabaseReference entryTicketRef = FirebaseDatabase.getInstance().getReference();
+        EntryTicket entryTicket = new EntryTicket(null,"צמיד כניסה",
+                "צמיד כניסה מהווה כניסה למתחם האירועים בו יש הפקה, דיג'יי בר ועוד רק תבואו!",100,200,null);
+        entryTicketRef.child("entryTicket").setValue(entryTicket);
         return parent;
     }
 
@@ -231,61 +241,57 @@ public class HomeFragment extends Fragment implements View.OnClickListener, date
         openFilterDialogButton.setText(rooms + " חדרים " + guests + " אורחים");
     }
 
-    private void filterAllVacations() {
+    private void filterAllVacations(){
 
         availableVacations = new ArrayList<>();
         availableVacations.addAll(vacations);
-
+        Log.d("allVacations",availableVacations.toString());
         for (Vacation vacation : availableVacations) {
-            if (vacation.getTakenDates() == null || vacation.getTakenDates().size() == 0) {
-
-            } else {
-                for (String takenDate : vacation.getTakenDates()) {
-                    if (takenDate.equals(startDate)) {
-
-                        DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Users");
-                        cartRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot ds : snapshot.getChildren()) {
-                                    String userUid = ds.getKey();
-                                    Log.d("userId",userUid);
-                                    ds = ds.child(userUid).child("cart");
-                                    for (DataSnapshot data : ds.getChildren()){
-                                        String vacationUid = data.getKey();
-                                        Log.d("vacationUidO",data.getKey());
-                                        if (vacationUid.equals(vacation.getUid())){
-                                            Log.d("vacationUid",vacationUid);
-                                            String addedToCartTime = data.child(vacationUid).child("addToCartTime").getValue(String.class);
-                                            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
-                                            String currentDate = format.format(Calendar.getInstance().getTime());
-                                            if (!isTimeDiffOver(currentDate, addedToCartTime)) {
-                                                availableVacations.remove(vacation);
-                                            }
+            if (vacation.getTakenDates() == null || vacation.getTakenDates().size() == 0) {}
+            else {
+                DatabaseReference takenDateRef = FirebaseDatabase.getInstance().getReference("takenDates");
+                takenDateRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        outerloop:
+                        for (DataSnapshot ds : snapshot.getChildren()){
+                            if (ds.getKey().equals(vacation.getUid())){
+                                for (DataSnapshot snap : ds.getChildren()){
+                                    if (snap.child("takenDate").getValue(String.class).equals(startDate)){
+                                        String addedToCartTime = snap.child("addedToCartTime").getValue(String.class);
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                        String currentDate = format.format(Calendar.getInstance().getTime());
+                                        if (!isTimeDiffOver(currentDate,addedToCartTime)){
+                                            Log.d("deletingVacation",vacation.toString());
+                                            availableVacations.remove(vacation);
+                                            vacationAdapter.updateVacations(availableVacations);
+                                            vacationAdapter.notifyDataSetChanged();
+                                            break outerloop;
                                         }
                                     }
                                 }
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
+                        }
+                        vacationAdapter.updateVacations(availableVacations);
+                        vacationAdapter.notifyDataSetChanged();
                     }
-                }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         }
-        Log.d("availableVacations", availableVacations.toString());
-        vacationAdapter.updateVacations(availableVacations);
+
     }
 
     private boolean isTimeDiffOver(String currentTime, String takenTime) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd 'at' HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
 
         Date currentDate = null;
         Date takenDate = null;
+
         try {
             currentDate = formatter.parse(currentTime);
             takenDate = formatter.parse(takenTime);
@@ -296,8 +302,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, date
         long duration = currentDate.getTime() - takenDate.getTime();
 
         long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
-
+        Log.d("diffInMinutes",diffInMinutes+"");
         return diffInMinutes > 30;
     }
+
 }
 

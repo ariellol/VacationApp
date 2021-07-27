@@ -15,6 +15,9 @@
         <item name="windowActionBar">false</item>
         <item name="android:statusBarColor">@color/starCommandBlue</item>
         <item name="statusBarBackground">@color/starCommandBlue</item>
+
+        <item name="fontFamily">@font/miriam_libre_font_family</item>
+        <item name="android:windowSplashscreenContent" tools:targetApi="o">@color/greenBlueCrayola</item>
     </style>
 
 

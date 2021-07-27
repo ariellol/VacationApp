@@ -193,7 +193,7 @@
             android:background="@drawable/button_no_radius"
             android:text="הוספה לעגלה"
             android:id="@+id/add_to_cart"
-            app:backgroundTint="@color/starCommandBlue"
+            app:backgroundTint="@color/greenBlueCrayola"
             android:textSize="18sp"
             android:textColor="@color/white"/>
 

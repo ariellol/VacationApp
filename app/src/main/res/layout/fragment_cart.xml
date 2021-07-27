@@ -1,11 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ListView
+    android:layout_height="match_parent"
+    android:background="@color/lightGrey"
+    android:layoutDirection="rtl"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/cart_list_view"
         android:layout_height="wrap_content"/>
 
-</LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:elevation="5dp"
+        android:layout_height="100dp">
+
+    <Button
+        android:layout_width="180dp"
+        android:textColor="@color/white"
+        android:text="המשך לתשלום"
+        android:background="@drawable/rounded_button_blue_green_crayola"
+        android:id="@+id/continue_to_payment"
+        android:layout_gravity="center_vertical|left"
+        android:layout_marginLeft="15dp"
+        app:backgroundTint="@color/oceanGreen"
+        android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="סך הכל:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginRight="15dp"
+            android:textSize="16sp"
+            android:id="@+id/total_amount_of_money"
+            android:layout_gravity="center_vertical|right" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:id="@+id/snackbar_layout"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

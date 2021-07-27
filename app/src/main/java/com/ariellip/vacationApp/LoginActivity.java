@@ -2,19 +2,28 @@ package com.ariellip.vacationApp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
@@ -41,6 +51,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button resetPasswordButton;
     EditText mailToSendPassword;
 
+    CardView googleSignIn;
+
+    GoogleSignInOptions gso;
+    GoogleSignInClient client;
+
+    public static final int RC_SIGN_IN = 0;
+
+    private static final int REQ_ONE_TAP = 2;  // Can be any integer unique to the Activity.
+    private boolean showOneTapUI = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +73,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mailEt = findViewById(R.id.mailEtLogin);
         passwordEt = findViewById(R.id.rePasswordEtLogin);
         loginButton = findViewById(R.id.loginButton);
+        googleSignIn = findViewById(R.id.google_sign_in_button);
+        googleSignIn.setOnClickListener(this);
 
         mailEt.setOnFocusChangeListener(this);
         passwordEt.setOnFocusChangeListener(this);
@@ -62,15 +84,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         homeIntent = new Intent(LoginActivity.this,HomeActivity.class);
         if (userLoginAuth.getCurrentUser() != null){
+
             startActivity(homeIntent);
             finish();
         }
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        client = GoogleSignIn.getClient(this, gso);
 
         dialogForgotPassword = new Dialog(this);
         dialogForgotPassword.setContentView(R.layout.dialog_forgot_password);
         resetPasswordButton = dialogForgotPassword.findViewById(R.id.resetPasswordButton);
         mailToSendPassword = dialogForgotPassword.findViewById(R.id.email_forgot_password);
         resetPasswordButton.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -88,6 +120,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.forgotPassowrd:
                 dialogForgotPassword.show();
                 break;
+            case R.id.google_sign_in_button:
+
             case R.id.resetPasswordButton:
                 if (mailToSendPassword.getText().toString().equals("")){
                     mailToSendPassword.setError("חובה למלא שדה זה");
@@ -129,6 +163,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 String mail = mailEt.getText().toString().trim();
                 String password = passwordEt.getText().toString();
+
                 userLoginAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -161,13 +196,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
+                                    if (error.getMessage().equals("auth/invalid-email"))
+                                        Toast.makeText(LoginActivity.this, "כתובת מייל לא תקינה", Toast.LENGTH_SHORT).show();
+
+                                    if (error.getMessage().equals("auth/invalid-password"))
+                                        Toast.makeText(LoginActivity.this, "סיסמה לא תקינה", Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
-                                    Toast.makeText(LoginActivity.this, "התחברות נכשלה", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
-                        else
-                            Toast.makeText(LoginActivity.this, "התחברות נכשלה בדוק את השדות", Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
@@ -181,5 +218,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         else
             v.setBackgroundResource(R.drawable.edit_text_background);
     }
+
+
 
 }

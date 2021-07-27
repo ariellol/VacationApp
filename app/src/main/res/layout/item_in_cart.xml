@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="110dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.cardview.widget.CardView
+    app:cardElevation="6dp"
+    app:cardCornerRadius="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="110dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+    <ImageView
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:maxWidth="110dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/image_in_cart_item"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/image_in_cart_item"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_in_cart_item"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/price_in_cart_item"
+        android:textColor="@color/black"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="7.5dp"
+        android:layout_toRightOf="@id/image_in_cart_item"
+        android:layout_below="@id/title_in_cart_item"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"/>
+
+
+
+        <View
+            android:layout_width="3dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@android:color/darker_gray"
+            android:layout_height="50dp"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
+</RelativeLayout>
